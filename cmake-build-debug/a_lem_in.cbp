@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="a_lem_in"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/elindber/spring20/a_lem_in/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/elindber/spring20/a_lem_in/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/elindber/spring20/a_lem_in/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="a_lem_in">
+				<Option output="/Users/elindber/spring20/a_lem_in/cmake-build-debug/a_lem_in" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/elindber/spring20/a_lem_in/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/elindber/spring20/a_lem_in/includes"/>
+					<Add directory="/Users/elindber/spring20/a_lem_in/libftprintf/includes"/>
+					<Add directory="/Users/elindber/spring20/a_lem_in/libftprintf/libft"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 a_lem_in"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="a_lem_in/fast">
+				<Option output="/Users/elindber/spring20/a_lem_in/cmake-build-debug/a_lem_in" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/elindber/spring20/a_lem_in/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/elindber/spring20/a_lem_in/includes"/>
+					<Add directory="/Users/elindber/spring20/a_lem_in/libftprintf/includes"/>
+					<Add directory="/Users/elindber/spring20/a_lem_in/libftprintf/libft"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 a_lem_in/fast"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/elindber/spring20/a_lem_in/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/includes/lem_in.h">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/includes/ft_printf.h">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/includes/get_next_line.h">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_atoi.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_bzero.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_isalnum.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_isalpha.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_isascii.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_isdigit.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_isprint.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_itoa.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_lstdelone.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_lstnew.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memalloc.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memccpy.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memchr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memcmp.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memcpy.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memdel.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memmove.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_memset.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_nbrcount.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putchar.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putchar_fd.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putendl.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putendl_fd.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putnbr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putnbr_fd.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putstr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_putstr_fd.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strcat.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strchr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strclr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strcmp.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strcpy.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strdel.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strdup.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strequ.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_striter.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_striteri.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strjoin.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strlcat.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strlen.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strmap.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strmapi.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strncat.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strncmp.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strncpy.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strnequ.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strnew.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strnstr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strrchr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strsplit.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strstr.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strsub.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strtrim.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_tolower.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_toupper.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/libft/libft.h">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/ft_printf.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/get_next_line.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/imaxtoa.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/minwth_print.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/number_cast.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_c.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_d.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_f.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_o.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_p.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_percent.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_s.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_u.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/print_x.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/put_zeros.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/scan_tags.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/libftprintf/srcs/set_tags_and_print.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/ant_flow.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/error_management.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/get_links.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/handle_paths.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/lem_in.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/parse_two.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/reset_paths.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/source/save_path.c">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/0.start-end.map">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/1.most-simple.map">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/2.6rooms.map">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/3.108rooms.map">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/4.medium.map">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/a.map">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/valid_maps/bigmap">
+			<Option target="a_lem_in"/>
+		</Unit>
+		<Unit filename="/Users/elindber/spring20/a_lem_in/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

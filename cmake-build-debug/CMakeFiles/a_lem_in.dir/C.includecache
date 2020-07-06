@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/elindber/spring20/a_lem_in/libftprintf/libft/ft_strequ.c
+libft.h
+/Users/elindber/spring20/a_lem_in/libftprintf/libft/libft.h
+
+/Users/elindber/spring20/a_lem_in/libftprintf/libft/libft.h
+stdlib.h
+-
+unistd.h
+-
+stdint.h
+-
+
