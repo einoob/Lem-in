@@ -1,9 +1,9 @@
 1
 #Here is the number of lines required: 31
 ##start
-start 1 1
+Start 1 1
 ##end
-end 5 5
+End 5 5
 0 10 10
 1 13 13
 2 16 16

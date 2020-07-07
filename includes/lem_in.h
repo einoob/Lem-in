@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 13:42:05 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/06 17:54:29 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/07 16:07:36 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ typedef struct		s_info
 	int				max_paths;
 	int				end_reached;
 	int				link_amnt;
+	int				room_amnt;
 	int				path_stack;
+	int				start_index;
+	int				end_index;
 	char			**map;
 	char			***links;
 	char			**paths;
@@ -146,13 +149,14 @@ typedef struct		s_path
 int					parse_v2(t_output *output, t_info *info, int count);
 char				*last_on_path(char *path);
 void				get_links(t_info *info);
-void				save_path(t_info *info);
+void				save_path(t_info *info, int path_i);
 void				reset_rooms(t_info *info);
 void				ant_flow(t_info *info);
 void				exit_error(const char *str);
 void				free_2d_array(char **arr);
-void				add_to_path(t_info *info, char *add_room, int i);
-
+void				add_to_path(t_info *info, int s, int i);
+void				sort_rooms(t_info *info);
+int					find_a_room(t_info *info, char *to_find);
 void				print_paths(t_info *info);
 
 #endif

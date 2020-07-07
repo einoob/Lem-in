@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 13:10:11 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/06 18:19:58 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/07 14:14:46 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,27 @@ void	add_links_for_rooms(t_info *info, char *room1, char *room2)
 	{
 		if (ft_strequ(info->rooms[i]->name, room1))
 		{
-			free_2d_array(info->rooms[i]->links);
+		//	free_2d_array(info->rooms[i]->links);
 			add = ft_strjoin(room2, " ");
 			tmp = ft_strjoin(info->rooms[i]->link_string, add);
 			free(info->rooms[i]->link_string);
 			info->rooms[i]->link_string = ft_strdup(tmp);
 			free(tmp);
 			free(add);
-			info->rooms[i]->links = ft_strsplit(info->rooms[i]->link_string, ' ');
+		//	info->rooms[i]->links = ft_strsplit(info->rooms[i]->link_string, ' ');
 			added++;
-			ft_printf("%s\n", info->rooms[i]->links[0]);
 		}
 		else if (ft_strequ(info->rooms[i]->name, room2))
 		{
-			free_2d_array(info->rooms[i]->links);
+		//	free_2d_array(info->rooms[i]->links);
 			add = ft_strjoin(room1, " ");
 			tmp = ft_strjoin(info->rooms[i]->link_string, add);
 			free(info->rooms[i]->link_string);
 			info->rooms[i]->link_string = ft_strdup(tmp);
 			free(tmp);
 			free(add);
-			info->rooms[i]->links = ft_strsplit(info->rooms[i]->link_string, ' ');
+		//	info->rooms[i]->links = ft_strsplit(info->rooms[i]->link_string, ' ');
 			added++;
-			ft_printf("added %s for room %s\n", info->rooms[i]->links[0], info->rooms[i]->name);
 		}
 		if (added == 2)
 			return ;
@@ -95,12 +93,8 @@ int		room_info(t_info *info, char *line, int i, int start_end)
 	info->rooms[i]->y = ft_atoi(room_data[2]);
 	info->rooms[i]->start_or_end = start_end;
 	info->rooms[i]->visited = 0;
-	if (!(info->rooms[i]->links = (char**)malloc(sizeof(char*) * 1)))
-		exit_error(ERR_MALLOC);
-	info->rooms[i]->links[0] = NULL;
 	if (!(info->rooms[i]->link_string = ft_strnew(0)))
 		exit_error(ERR_MALLOC);
-	info->rooms[i]->links[0] = NULL;
 	if (start_end > 0)
 		info->rooms[i]->level = start_end == 1 ? 0 : INT_MAX;
 	else
@@ -179,12 +173,14 @@ int		parse_v2(t_output *output, t_info *info, int count)
 		count++;
 	}
 	if (!(info->map = (char**)malloc(sizeof(char*) * (count + 1))) ||
-	!(info->rooms = (t_room**)malloc(sizeof(t_room*) * rooms + 1)) ||
-	!(info->links = (char***)malloc(sizeof(char**) * (info->link_amnt + 1))))
+	!(info->rooms = (t_room**)malloc(sizeof(t_room*) * rooms + 1)))
+//	!(info->links = (char***)malloc(sizeof(char**) * (info->link_amnt + 1))))
 		return (0);
 	info->rooms[rooms] = NULL;
-	info->links[links] = NULL;
+	info->room_amnt = rooms;
+//	info->links[links] = NULL;
 	print_lines(tmp2, info);
+	sort_rooms(info);
 	return (1);
 }
 

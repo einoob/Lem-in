@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(a_lem_in)
+project(lEMIN_OWN)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -7,7 +7,7 @@ include_directories(includes)
 include_directories(libftprintf/includes)
 include_directories(libftprintf/libft)
 
-add_executable(a_lem_in
+add_executable(lEMIN_OWN
         includes/lem_in.h
         libftprintf/includes/ft_printf.h
         libftprintf/includes/get_next_line.h
@@ -86,12 +86,15 @@ add_executable(a_lem_in
         libftprintf/srcs/set_tags_and_print.c
         source/ant_flow.c
         source/error_management.c
+        source/find_a_room.c
         source/get_links.c
+        source/get_links_2.c
         source/handle_paths.c
         source/lem_in.c
         source/parse_two.c
         source/reset_paths.c
         source/save_path.c
+        source/sort_rooms.c
         valid_maps/0.start-end.map
         valid_maps/1.most-simple.map
         valid_maps/2.6rooms.map

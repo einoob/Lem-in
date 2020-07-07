@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 16:26:57 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/06 18:26:37 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/07 18:08:37 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int		main(int ac, char **av)
 		av++;
 		ac--;
 	}
-//	info->tmpfd = open(av[1], O_RDONLY);
-	info->tmpfd = 0;
+	info->tmpfd = open(av[1], O_RDONLY);
+//	info->tmpfd = 0;
 	if (ac > 0 && !help)
 	{
 		if (verbose)
@@ -115,8 +115,8 @@ int		main(int ac, char **av)
 		ft_printf("HELP!\n");
 	else
 	 	exit_error(ERR_USAGE);
-	ft_printf("\n\nPATHS SAVED:\n");
-//	print_paths(info);
+	ft_printf("><><><><><><\n><><><><><><\nPATHS  SAVED:\n");
+	print_paths(info);
 //	free_memory(info, 0);
 //	while (1);
 	return (0);
