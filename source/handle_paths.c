@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 17:45:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/07 17:34:37 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/08 14:05:26 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,26 @@
 void	create_fork(t_info *info, int room_i, int y)
 {
 	int		t;
+	int		s;
 	int		note;
+	int		fork;
 
 	t = 0;
+	fork = 0;
 	note = y;
 	while (info->rooms[room_i]->links[t] != NULL)
+	{
+		s = find_a_room(info, info->rooms[room_i]->links[t]);
+		ft_printf("[%d][%s] [%d][%s]\n", info->rooms[room_i]->level, info->rooms[room_i]->name, info->rooms[s]->level, info->rooms[s]->name);
+		if (info->rooms[room_i]->level < info->rooms[s]->level &&
+		s != info->end_index)
+		{
+			fork++;
+			ft_printf("%d\n", fork);
+		}
 		t++;
-	if (t > 2)
+	}
+	if (fork > 0)
 	{
 		while (info->paths[y] != NULL)
 			y++;
@@ -55,10 +68,12 @@ void	add_to_path(t_info *info, int last, int next)
 	int		y;
 	
 	y = 0;
+//	ft_printf("info->rooms[next] [%d] %s \n", next, info->rooms[next]->name);
+//	ft_printf("info->rooms[last] [%d] %s \n", last, info->rooms[last]->name);
 	while (info->paths[y] != NULL)
 	{
-		last_room = last_on_path(info->paths[y]);
 	//	ft_printf("%s\n", info->paths[y]);
+		last_room = last_on_path(info->paths[y]);
 		if (/*(info->rooms[last]->level >= info->rooms[next]->level
 		|| info->rooms[last]->level == info->rooms[next]->level + 1)
 		&& */info->paths[y][0] != '#' && ft_strequ(last_room, info->rooms[last]->name))
@@ -76,108 +91,8 @@ void	add_to_path(t_info *info, int last, int next)
 			free(last_room);
 			return ;
 		}
+//		ft_putendl("segg");
 		free(last_room);
 		y++;
 	}
 }
-
-/*
-int		link_level(t_info *info, char *cmp_room, int level)
-{
-	int	i;
-
-	i = 0;
-	while (info->rooms[i] != NULL)
-	{
-		if (ft_strequ(info->rooms[i]->name, cmp_room))
-		{
-			return(info->rooms[i]->level >= level);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int		link_not_visited(t_info *info, char *cmp_room, int level)
-{
-	int		i;
-
-	i = 0;
-	level++;
-	while (info->rooms[i] != NULL)
-	{
-		if (ft_strequ(info->rooms[i]->name, cmp_room))
-		{
-			return (info->rooms[i]->visited > 0
-			|| info->rooms[i]->start_or_end == 2);
-		}
-		i++;
-	}
-	return (0);
-}
-
-void	create_fork(t_info *info, int i, int y)
-{
-	char	*duplicate;
-	char	*tmp;
-	int		x;
-
-	x = 0;
-	duplicate = ft_strdup(info->paths[y]);
-	y = 0;
-//	ft_printf("room: %s\n", info->rooms[i]->name);
-	while (info->rooms[i]->links[x] != NULL)
-	{
-		if (link_not_visited(info, info->rooms[i]->links[x], info->rooms[i]->level))
-		{
-			while (info->paths[y] != NULL)
-				y++;
-			tmp = ft_strdup(duplicate);
-			info->paths[y] = ft_strdup(tmp);
-			free(tmp);
-			info->path_stack++;
-		}
-		x++;
-	}
-//	ft_putchar('\n');
-	free(duplicate);
-}
-
-void	add_to_path(t_info *info, char *add_room, int i)
-{
-	char	*tmp;
-	char	*add;
-	char	*last;
-	int		y;
-
-	y = 0;
-//	ft_printf("room[%s] level[%d]\n", info->rooms[i]->name, info->rooms[i]->level);
-	while (info->paths[y] != NULL) //&& !(ft_strequ(add_room, info->start)))
-	{
-//		ft_printf("%d %d\n", y, info->path_stack);
-   //     ft_printf("%s\n", info->paths[y]);
-		last = last_on_path(info->paths[y]);
-		if (ft_strequ(last, info->rooms[i]->name)
-		&& link_level(info, add_room, info->rooms[i]->level))
-		{
-			create_fork(info, i, y);
-			add = ft_strjoin(add_room, " ");
-			tmp = ft_strjoin(info->paths[y], add);
-			free(info->paths[y]);
-			info->paths[y] = ft_strdup(tmp);
-			free(tmp);
-			free(add);
-			break ;
-		}
-//		ft_printf("path[%d] %s\tlast: [%s]\n", y, info->paths[y], last);
-		free(last);
-		y++;
-	}
-//	y = 0;
-//	while (y < info->path_stack)
-//	{
-//		ft_printf("path[%d] %s\tlast: [%s]\n", y, info->paths[y], last);
-//		y++;
-//	}
-}
-*/

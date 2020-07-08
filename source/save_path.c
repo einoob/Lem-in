@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 13:01:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/07 18:06:56 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/08 12:16:38 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	delete_duplicates(t_info *info, char *path)
 			{
 				if (ft_strequ(valid_path[t], cmp[i]))
 				{
-					info->paths[y] = ft_memmove(info->paths[y], "#", 1);
+					info->paths[y][0] = '#';
 					while (cmp[i + 1] != NULL)
 						i++;
 				}
@@ -71,7 +71,7 @@ void	delete_duplicates(t_info *info, char *path)
 void	save_path(t_info *info, int path_i)
 {
 	info->valid_paths[info->path_amount] = ft_strdup(info->paths[path_i]);
-	ft_printf("S A V I N G: [%s]\n", info->valid_paths[info->path_amount]);
+//	ft_printf("S A V I N G: [%s]\n", info->valid_paths[info->path_amount]);
 	delete_duplicates(info, info->valid_paths[info->path_amount]);
 	check_end(info);
 	info->path_amount++;

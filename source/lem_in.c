@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 16:26:57 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/07 18:08:37 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/08 11:34:20 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	print_paths(t_info *info)
 	int		i;
 
 	i = 0;
+	ft_printf("ants: %d\n", info->ants);
 	while (info->valid_paths[i] != NULL)
 	{
 		ft_printf("[%s]\n", ft_strtrim(info->valid_paths[i]));
@@ -96,8 +97,8 @@ int		main(int ac, char **av)
 		av++;
 		ac--;
 	}
-	info->tmpfd = open(av[1], O_RDONLY);
-//	info->tmpfd = 0;
+//	info->tmpfd = open(av[1], O_RDONLY);
+	info->tmpfd = 0;
 	if (ac > 0 && !help)
 	{
 		if (verbose)
