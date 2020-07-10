@@ -6,36 +6,28 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 13:45:46 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/06 12:59:42 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/10 17:30:55 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-int		room_on_valid_path(t_info *info, char *room)
+int		room_on_valid_path(t_info *info, int i)
 {
-	char	**path;
 	int		y;
-	int		i;
+	int		t;
 
 	y = 0;
-	i = 0;
-//	ft_printf("%s\n", info->valid_paths[1]);
-	while (y < info->path_amount)
+	t = 0;
+	while (info->valid_indexes[y][0] != EMPTY)
 	{
-		path = ft_strsplit(info->valid_paths[y], ' ');
-		while (path[i] != NULL)
+		while (info->valid_indexes[y][t] != EMPTY)
 		{
-			if (ft_strequ(path[i], room) && !(ft_strequ(info->end, room)))
-			{
-			//	ft_printf("room deleting: [%s] [%s]\n", room, path[i]);
-				free_2d_array(path);
+			if (info->valid_indexes[y][t] == i)
 				return (1);
-			}
-			i++;
+			t++;
 		}
-		free_2d_array(path);
-		i = 0;
+		t = 0;
 		y++;
 	}
 	return (0);
@@ -44,18 +36,15 @@ int		room_on_valid_path(t_info *info, char *room)
 void	reset_rooms(t_info *info)
 {
 	int		i;
-	int		p;
 
 	i = 0;
-	p = 0;
 	info->level = 1;
 	while (info->rooms[i] != NULL)
 	{
-		if (room_on_valid_path(info, info->rooms[i]->name))
-			info->rooms[i]->visited = 3;
+		if (room_on_valid_path(info, i) && i != info->end_index)
+			info->rooms[i]->visited = 2;
 		else
 			info->rooms[i]->visited = 0;
 		i++;
 	}
-	info->path_stack = 0;
 }

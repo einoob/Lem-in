@@ -6,11 +6,12 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 13:10:11 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/07 14:14:46 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/10 12:42:04 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
 
 int		count_size(char **links)
 {
@@ -99,6 +100,7 @@ int		room_info(t_info *info, char *line, int i, int start_end)
 		info->rooms[i]->level = start_end == 1 ? 0 : INT_MAX;
 	else
 		info->rooms[i]->level = -1;
+	info->rooms[i]->path = -1;
 	if (start_end == 1)
 		info->start = ft_strdup(room_data[0]);
 	else if (start_end == 2)

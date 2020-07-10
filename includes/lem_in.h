@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 13:42:05 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/07 16:07:36 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/10 15:50:01 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ERR_MALLOC			"Error: Failed to Malloc!"
 # define ERR_USAGE			"USAGE: ./lem-in < [file]"
 # define ERR_NO_EL			"Error: No empty line between links and locations"
+# define ERR_PARSE_V2		"Error: !Parse_v2"
 # define ERR_ROOM_DUP_COORD	"Error: Duplicate room coordinates found!"
 # define ERR_ROOM_M_END		"Error: Multiple ends found!"
 # define ERR_ROOM_M_START	"Error: Multiple starts found!"
@@ -46,6 +47,8 @@
 # define ERR_ROOM_NO_END	"Error: No end room!"
 # define ERR_ROOM_NO_ROOMS	"Error: No rooms found!"
 # define ERR_ROOM_NO_START	"Error: No start room!"
+# define EMPTY -1
+# define LOCKED -2
 
 /*
 **	Enums for boolean
@@ -99,6 +102,7 @@ typedef struct		s_ant
 {
 	int				number;
 	int				path;
+	int				room_index;
 	char			*room;
 }					t_ant;
 
@@ -108,20 +112,26 @@ typedef struct		s_info
 	char			*end;
 	int				level;
 	int				ants;
+	int				ants_start;
+	int				ants_end;
 	int				path_amount;
 	int				max_paths;
-	int				end_reached;
+	int				path_saved;
 	int				link_amnt;
 	int				room_amnt;
 	int				path_stack;
 	int				start_index;
 	int				end_index;
+	int				**index_stack;
+	int				**valid_indexes;
+	int				check_rooms[513];
 	char			**map;
 	char			***links;
 	char			**paths;
 	char			**valid_paths;
 	char			**rooms_to_check;
-	char			*tmp_string;
+	int				tmp_string[513];
+	t_ant			*ant;
 	t_room			**rooms;
 	t_room			***route;
 	int             tmpfd;
@@ -147,16 +157,20 @@ typedef struct		s_path
 */
 
 int					parse_v2(t_output *output, t_info *info, int count);
-char				*last_on_path(char *path);
+int					last_on_path(int *path);
 void				get_links(t_info *info);
+int					get_links_for_start(t_info *info);
 void				save_path(t_info *info, int path_i);
 void				reset_rooms(t_info *info);
 void				ant_flow(t_info *info);
 void				exit_error(const char *str);
 void				free_2d_array(char **arr);
+void				find_paths(t_info *info);
 void				add_to_path(t_info *info, int s, int i);
 void				sort_rooms(t_info *info);
 int					find_a_room(t_info *info, char *to_find);
 void				print_paths(t_info *info);
+void				take_turns(t_info *lem_in);
+void				reset_tmp_stacks(t_info *info);
 
 #endif
