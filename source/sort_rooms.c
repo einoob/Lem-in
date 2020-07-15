@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 12:34:22 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 15:00:10 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 15:00:02 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		find_a_room(t_info *info, char *to_find)
 			cmp = start + ((end - start) / 2); 
 		}
 	}
+	// maybe call exit_error here
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 13:42:05 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 15:50:01 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 16:37:52 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <fcntl.h> //debug include
+
 /*
 **	Error Management
 **
@@ -47,6 +48,11 @@
 # define ERR_ROOM_NO_END	"Error: No end room!"
 # define ERR_ROOM_NO_ROOMS	"Error: No rooms found!"
 # define ERR_ROOM_NO_START	"Error: No start room!"
+
+/*
+**	Other defined values
+*/
+
 # define EMPTY -1
 # define LOCKED -2
 
@@ -56,121 +62,143 @@
 
 typedef enum
 {
-	FALSE,
-	TRUE,
+		FALSE,
+		TRUE,
 }		t_bool;
 
-typedef struct 		s_lem_in
-{
-	t_bool			help;
-	t_bool			verbose;
-}					t_lem_in;
+// typedef struct 		s_lem_in
+// {
+// 	t_bool			help;
+// 	t_bool			verbose;
+// }					t_lem_in;
 
-typedef struct		s_output
+typedef struct			s_output
 {
-	char			*line;
-	struct s_output	*next;
-}					t_output;
+	char				*line;
+	struct s_output		*next;
+}						t_output;
 
-typedef struct		s_room
+typedef struct			s_room
 {
-	char			**links;
-	char			*link_string;
-	char			*name;
-	int				start_or_end;
-	int				visited;
-	int				path;
-	int				level;
-	int				length;
-	int				ants;
-	int				y;
-	int				x;
-}					t_room;
+	char				**links;
+	char				*link_string;
+	char				*name;
+	int					*ant_queue;
+	int					start_or_end;
+	int					visited;
+	int					path;
+	int					level;
+	int					length;
+	int					cost;
+	int					ants;
+	int					ant_id;
+	int					flow;
+	int					y;
+	int					x;
+}						t_room;
 
-typedef struct		s_route
+typedef struct			s_route
 {
-	char			*name;
-	int				ants;
-	int				visited;
-	int				path;
-	int				start_or_end;
-	int				level;
-}					t_route;
+	char				*name;
+	int					ants;
+	int					visited;
+	int					path;
+	int					start_or_end;
+	int					level;
+}						t_route;
 
-
-typedef struct		s_ant
+typedef struct			s_ant
 {
-	int				number;
-	int				path;
-	int				room_index;
-	char			*room;
-}					t_ant;
+	int					number;
+	int					path;
+	char				*room;
+}						t_ant;
 
-typedef struct		s_info
+typedef struct			s_location
 {
-	char			*start;
-	char			*end;
-	int				level;
-	int				ants;
-	int				ants_start;
-	int				ants_end;
-	int				path_amount;
-	int				max_paths;
-	int				path_saved;
-	int				link_amnt;
-	int				room_amnt;
-	int				path_stack;
-	int				start_index;
-	int				end_index;
-	int				**index_stack;
-	int				**valid_indexes;
-	int				check_rooms[513];
-	char			**map;
-	char			***links;
-	char			**paths;
-	char			**valid_paths;
-	char			**rooms_to_check;
-	int				tmp_string[513];
-	t_ant			*ant;
-	t_room			**rooms;
-	t_room			***route;
-	int             tmpfd;
-}					t_info;
+	int					ant_number;
+	t_room				*room;
+	struct s_location	*next;
+	struct s_location	*previous;
+}						t_location;
 
-typedef struct		s_link
+typedef struct			s_info
 {
-	t_room 			*room1;
-	t_room			*room2;
-	struct s_link	*next;
-}					t_link;
+	char				*start;
+	char				*end;
+	int					level;
+	int					ants;
+	int					ants_at_start;
+	int					ants_at_end;
+	int					path_amount;
+	int					max_paths;
+	int					path_saved;
+	int					phase;
+	int					link_amnt;
+	int					room_amnt;
+	int					path_stack;
+	int					start_index;
+	int					end_index;
+	int					**index_stack;
+	int					**valid_indexes;
+	int					check_rooms[513];
+	int					lines;
+	char				**map;
+	char				***links;
+	char				**paths; // can be removed later
+	char				**valid_paths;
+	char				**rooms_to_check;
+	int					tmp_string[513];
+	t_ant				*ant;
+	t_location			*location;
+	t_room				**rooms;
+	t_room				***route;
+	int					tmpfd;
+}						t_info;
 
-typedef struct		s_path
+typedef struct			s_link
 {
-	char			**rooms;
-	int				length;
-	int				ants_on_path;
-	struct s_path	*next;
-}					t_path;
+	t_room				*room1;
+	t_room				*room2;
+	struct s_link		*next;
+}						t_link;
+
+typedef struct			s_path
+{
+	char				**rooms;
+	int					length;
+	int					ants_on_path;
+	struct s_path		*next;
+}						t_path;
 
 /*
 ** Functions
 */
 
-int					parse_v2(t_output *output, t_info *info, int count);
-int					last_on_path(int *path);
-void				get_links(t_info *info);
-int					get_links_for_start(t_info *info);
-void				save_path(t_info *info, int path_i);
-void				reset_rooms(t_info *info);
-void				ant_flow(t_info *info);
-void				exit_error(const char *str);
-void				free_2d_array(char **arr);
-void				find_paths(t_info *info);
-void				add_to_path(t_info *info, int s, int i);
-void				sort_rooms(t_info *info);
-int					find_a_room(t_info *info, char *to_find);
-void				print_paths(t_info *info);
-void				take_turns(t_info *lem_in);
-void				reset_tmp_stacks(t_info *info);
+int						parse_v2(t_output *output, t_info *info, int count);
+int						last_on_path(int *path);
+void					get_links(t_info *info);
+int						get_links_for_start(t_info *info);
+void					save_path(t_info *info, int path_i);
+void					reset_rooms(t_info *info);
+void					ant_flow(t_info *info);
+void					exit_error(const char *str);
+void					free_2d_array(char **arr);
+void					find_paths(t_info *info);
+void					add_to_path(t_info *info, int s, int i);
+void					sort_rooms(t_info *info);
+int						find_a_room(t_info *info, char *to_find);
+void					print_paths(t_info *info);
+void					reset_tmp_stacks(t_info *info);
+
+void					parse_ants(t_info *info, t_output *output);
+
+/*
+**	Ant turns functions
+*/
+
+void					lst_free(t_info *info);
+void					print_locations(t_info *info);
+void					take_turns(t_info *info);
 
 #endif

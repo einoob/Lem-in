@@ -6,14 +6,14 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 13:10:11 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 12:42:04 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 16:37:29 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
 
-int		count_size(char **links)
+int		count_size(char **links) // maybe not needed anymore?
 {
 	int		i;
 
@@ -69,7 +69,7 @@ int		add_link(t_info *info, char *line, int i)
 	char	**link_data;
 
 	link_data = ft_strsplit(line, '-');
-	link_data[2] = NULL;
+//	link_data[2] = NULL;
 	i += 0;
 //	if (!(info->links[i] = (char**)malloc(sizeof(char*) * 3)))
 //		return (0);
@@ -86,7 +86,7 @@ int		room_info(t_info *info, char *line, int i, int start_end)
 	char	**room_data;
 
 	room_data = ft_strsplit(line, ' ');
-	room_data[3] = NULL;
+//	room_data[3] = NULL;
 	if (!(info->rooms[i] = (t_room*)malloc(sizeof(t_room))))
 		return (0);
 	info->rooms[i]->name = ft_strdup(room_data[0]);
@@ -94,6 +94,7 @@ int		room_info(t_info *info, char *line, int i, int start_end)
 	info->rooms[i]->y = ft_atoi(room_data[2]);
 	info->rooms[i]->start_or_end = start_end;
 	info->rooms[i]->visited = 0;
+	info->rooms[i]->ants = 0;
 	if (!(info->rooms[i]->link_string = ft_strnew(0)))
 		exit_error(ERR_MALLOC);
 	if (start_end > 0)
@@ -101,6 +102,7 @@ int		room_info(t_info *info, char *line, int i, int start_end)
 	else
 		info->rooms[i]->level = -1;
 	info->rooms[i]->path = -1;
+	info->rooms[i]->flow = 0;
 	if (start_end == 1)
 		info->start = ft_strdup(room_data[0]);
 	else if (start_end == 2)
@@ -118,12 +120,13 @@ void	print_lines(t_output *op, t_info *info)
 	int		links;
 
 	i = 0;
+	tmp = -1;
 	rooms = 0;
 	links = 0;
 	start_end = 0;
 	while (op != NULL)
 	{
-		info->map[i] = ft_strdup(op->line);
+		info->map[i] = ft_strdup(op->line); // maybe this can be removed
 		if (ft_strstr(op->line, "##start") || ft_strstr(op->line, "##end"))
 		{
 			start_end = ft_strstr(op->line, "##start") ? 1 : 2;
@@ -163,7 +166,7 @@ int		parse_v2(t_output *output, t_info *info, int count)
 	{
 		if (!(tmp = (t_output*)malloc(sizeof(t_output))))
 			return (0);
-		if (ft_strchr(line, ' ') && !(ft_strchr(line, '#')))
+		if (ft_strchr(line, ' ') && !(ft_strchr(line, '#'))) // change conditon so that the hashtag OR L can not be in the 0 index of line
 			rooms++;
 		if (ft_strchr(line, '-') && !(ft_strchr(line, ' ')))
 			info->link_amnt++;
@@ -177,7 +180,7 @@ int		parse_v2(t_output *output, t_info *info, int count)
 	if (!(info->map = (char**)malloc(sizeof(char*) * (count + 1))) ||
 	!(info->rooms = (t_room**)malloc(sizeof(t_room*) * rooms + 1)))
 //	!(info->links = (char***)malloc(sizeof(char**) * (info->link_amnt + 1))))
-		return (0);
+		exit_error(ERR_MALLOC);
 	info->rooms[rooms] = NULL;
 	info->room_amnt = rooms;
 //	info->links[links] = NULL;

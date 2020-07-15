@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 14:04:26 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 17:38:34 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 15:04:30 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,19 @@
 void	copy_check_rooms(t_info *info)
 {
 	int		i;
-	int		t;
 
 	i = 0;
-	t = 0;
 	while (info->check_rooms[i] != EMPTY)
 	{
 		info->check_rooms[i] = EMPTY;
 		i++;
 	}
-//	ft_printf("\n");
 	i = 0;
 	while (info->tmp_string[i] != EMPTY)
 	{
 		info->check_rooms[i] = info->tmp_string[i];
 		i++;
 	}
-//	ft_printf("\n");
 	i = 0;
 	while (info->tmp_string[i] != EMPTY)
 	{
@@ -50,7 +46,6 @@ void	add_to_next_round(t_info *info, int i)
 	while (info->tmp_string[t] != EMPTY)
 		t++;
 	info->tmp_string[t] = i;
-//	ft_printf("nr: %s\n", info->rooms[i]->name);
 }
 
 void	find_paths(t_info *info)
@@ -62,7 +57,7 @@ void	find_paths(t_info *info)
 
 	i = 0;
 	j = 0;
-	if (info->path_saved > 0)
+	if (info->path_saved > 0) // ultimate ending condition
 		return ;
 	while (info->check_rooms[i] != EMPTY && info->path_saved == 0)
 	{
@@ -72,9 +67,9 @@ void	find_paths(t_info *info)
 			l = find_a_room(info, info->rooms[info->check_rooms[i]]->links[j]);
 			if (info->rooms[l]->visited == 0)
 			{
-			info->rooms[l]->visited = info->rooms[l]->start_or_end == 2 ? 0 : 1;
-			if (info->rooms[l]->level < 0)
-				info->rooms[l]->level = info->rooms[l]->start_or_end == 2 ? INT_MAX : info->level;
+				info->rooms[l]->visited = info->rooms[l]->start_or_end == 2 ? 0 : 1;
+				if (info->rooms[l]->level < 0)
+					info->rooms[l]->level = info->rooms[l]->start_or_end == 2 ? INT_MAX : info->level;
 				add_to_path(info, s, l);
 				add_to_next_round(info, l);
 			}
@@ -88,8 +83,6 @@ void	find_paths(t_info *info)
 	}
 	if (l != info->end_index && info->check_rooms[0] >= 0 && info->tmp_string[0] >= 0)
 	{
-	//	if (info->path_amount > 5)
-	//		ft_printf("%s %s[%d]\n", info->rooms[info->check_rooms[0]]->name, info->rooms[info->tmp_string[0]]->name, info->tmp_string[0]);
 	    copy_check_rooms(info);
 		info->level++;
 		find_paths(info);
@@ -102,7 +95,7 @@ void	find_paths(t_info *info)
 	}
 }
 
-int		get_links_for_start(t_info *info)
+int		get_links_for_start(t_info *info) // change to void
 {
 	int		room_list[513];
 	int		i;
@@ -125,12 +118,13 @@ int		get_links_for_start(t_info *info)
 		{
 			info->rooms[s]->visited = 1;
 			info->rooms[s]->level = info->level;
-			info->index_stack[i][0] = s;
+			info->index_stack[t][0] = s;
 			info->check_rooms[t] = s;
 			t++;
 		}
 		i++;
 	}
+	t = 0;
 	info->rooms[info->start_index]->visited = 2;
 	info->level++;
 	return (1);
@@ -168,7 +162,3 @@ void	get_links(t_info *info)
 	find_paths(info);
 //	while (info->end_reached == 0)
 }
-
-/*
-** must change the structure for get links functions so that we can reset the rooms and start searching from start again, will do this on friday
-*/

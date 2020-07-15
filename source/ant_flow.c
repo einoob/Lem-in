@@ -6,87 +6,175 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:30:44 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/02 14:53:31 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 17:57:21 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void	route_info(t_info *info, char *name, int nbr, int i)
+void	ant_to_first_room(t_info *info, int i)
 {
-	ft_printf("route info: %d %d %s\n", nbr, i, name);
-	if (!(info->route[nbr][i] = (t_room*)malloc(sizeof(t_room))))
-			exit_error(ERR_MALLOC);
-	ft_printf("JA %d %d %s\n", nbr, i, name);
-	info->route[nbr][i]->name = ft_strdup(name);
-	info->route[nbr][i]->ants = 0;
-	info->route[nbr][i]->visited = 0;
-	info->route[nbr][i]->path = nbr;
-	if (ft_strequ(name, info->end))
+	char	*ant;
+	int		t;
+
+	t = 0;
+	while (info->rooms[info->valid_indexes[i][0]]->ant_queue[t] == -1)
+		t++;
+	if (info->rooms[info->valid_indexes[i][0]]->ant_queue[t] <= 0)
+		return ;
+	ant = ft_itoa(info->rooms[info->valid_indexes[i][0]]->ant_queue[t]);
+	ft_printf("L%s-%s ", ant, info->rooms[info->valid_indexes[i][0]]->name);
+//	ft_printf("L%s-%s\n", ant, info->rooms[info->valid_indexes[i][0]]->name);
+	free(ant);
+	info->rooms[info->valid_indexes[i][0]]->visited = 1;
+	info->rooms[info->valid_indexes[i][0]]->ant_id = info->rooms[info->valid_indexes[i][0]]->ant_queue[t];
+	info->rooms[info->valid_indexes[i][0]]->ant_queue[t] = -1;
+	info->ants_at_start--;
+}
+
+void	move_path(t_info *info, int i)
+{
+	char	*ant;
+	int		t;
+
+	t = info->rooms[info->valid_indexes[i][0]]->length - 1;
+	while (t >= 0)
 	{
-		info->route[nbr][i]->start_or_end = 2;
-		info->route[nbr][i]->level = INT_MAX;
+		if (info->rooms[info->valid_indexes[i][t]]->ant_id > 0 && /*info->rooms[info->valid_indexes[i][t]]->ant_id <= info->ants &&*/ info->rooms[info->valid_indexes[i][t]]->visited == 1 && info->rooms[info->valid_indexes[i][t + 1]]->visited == 0)
+		{
+			ant = ft_itoa(info->rooms[info->valid_indexes[i][t]]->ant_id);
+			ft_printf("L%s-%s ", ant, info->rooms[info->valid_indexes[i][t + 1]]->name);
+			free(ant);
+			info->rooms[info->valid_indexes[i][t + 1]]->ant_id = info->rooms[info->valid_indexes[i][t]]->ant_id;
+			info->rooms[info->valid_indexes[i][t + 1]]->visited = info->valid_indexes[i][t + 1] == info->end_index ? 0 : 1;
+			if (info->valid_indexes[i][t + 1] == info->end_index)
+				info->ants_at_end++;
+			info->rooms[info->valid_indexes[i][t]]->visited = 0;
+			info->rooms[info->valid_indexes[i][t]]->ant_id = 0;
+		}
+		t--;
 	}
-	else
+	if (info->ants_at_start > 0)
+		ant_to_first_room(info, i);
+}
+
+void	print_turns(t_info *info)
+{
+	int		i;
+
+	i = 0;
+	while (info->ants_at_end < info->ants)
 	{
-		info->route[nbr][i]->start_or_end = 0;
-		info->route[nbr][i]->level = i + 1;
+		move_path(info, i);
+		i++;
+		if (info->ants_at_end == info->ants)
+		{
+			if (i != 0)
+				ft_putchar('\n');
+			return ;
+		}
+		if (i == info->path_amount)
+		{
+			i = 0;
+			info->lines++;
+			ft_putchar('\n');
+		}
 	}
 }
 
-void	create_route(t_info *info, char	*path, int nbr)
+void	divide_to_paths(t_info *info)
 {
-	char	**table;
+	int		i;
+	int		ant_nbr;
+	int		tab;
+	int		cmp;
+
+	i = 0;
+	cmp = 0;
+	ant_nbr = 1;
+	while (info->ants_at_start > 0)
+	{
+		if (info->path_amount == 1)
+		{
+			tab = info->rooms[info->valid_indexes[i][0]]->ants;
+			info->rooms[info->valid_indexes[i][0]]->ant_queue[tab] = ant_nbr;
+			info->rooms[info->valid_indexes[i][0]]->ants++;
+			info->rooms[info->valid_indexes[i][0]]->cost++;
+			info->ants_at_start--;
+			ant_nbr++;
+		}
+		else if (info->rooms[info->valid_indexes[i][0]]->cost <= info->rooms[info->valid_indexes[i + 1][0]]->cost)
+		{
+			if (info->rooms[info->valid_indexes[i][0]]->cost == info->rooms[info->valid_indexes[i + 1][0]]->cost)
+			{
+				cmp = info->rooms[info->valid_indexes[i][0]]->cost;
+				i = 0;
+				while (info->rooms[info->valid_indexes[i][0]]->cost > cmp)
+					i++;
+			}
+			tab = info->rooms[info->valid_indexes[i][0]]->ants;
+			info->rooms[info->valid_indexes[i][0]]->ant_queue[tab] = ant_nbr;
+			info->rooms[info->valid_indexes[i][0]]->ants++;
+			info->rooms[info->valid_indexes[i][0]]->cost++;
+			info->ants_at_start--;
+			ant_nbr++;
+		}
+		else if (info->rooms[info->valid_indexes[i][0]]->cost > info->rooms[info->valid_indexes[i + 1][0]]->cost)
+		{
+			i++;
+			tab = info->rooms[info->valid_indexes[i][0]]->ants;
+			info->rooms[info->valid_indexes[i][0]]->ant_queue[tab] = ant_nbr;
+			info->rooms[info->valid_indexes[i][0]]->ants++;
+			info->rooms[info->valid_indexes[i][0]]->cost++;
+			info->ants_at_start--;
+			ant_nbr++;
+		}
+		if (i == info->path_amount - 1 || info->rooms[info->valid_indexes[i][0]]->cost < info->rooms[info->valid_indexes[i + 1][0]]->cost)
+			i = 0;
+	}
+	info->ants_at_start = info->ants;
+}
+
+void	reset_room_statuses(t_info *info)
+{
+	int		i;
 	int		y;
 
+	i = 0;
 	y = 0;
-	table = ft_strsplit(path, ' ');
-	while (table[y] != NULL)
+	while (y < info->path_amount && info->valid_indexes[y][0] != EMPTY)
 	{
-		ft_printf("[%s]\n", table[y]);
+		while (info->valid_indexes[y][i] != EMPTY)
+		{
+			info->rooms[info->valid_indexes[y][i]]->visited = 0;
+			i++;
+		}
+		i = 0;
 		y++;
 	}
-	ft_printf("rooms on route %d: %d\n", nbr, y);
-	if (!(info->route[nbr] != (t_room**)malloc(sizeof(t_room*) * (y + 1))))
-		exit_error(ERR_MALLOC);
-	y = 0;
-	while (table[y] != NULL)
-	{
-		route_info(info, table[y], nbr, y);
-		y++;
-	}
-	info->route[nbr][y] = NULL;
-	free_2d_array(table);
 }
 
 void	ant_flow(t_info *info)
 {
-	int		y;
-	
-	y = 0;
-	while (info->valid_paths[y] != NULL)
-		y++;
-	if (!(info->route = (t_room***)malloc(sizeof(t_room**) * (y + 1))))
-		exit_error(ERR_MALLOC);
-	ft_printf("routes: %d\n", y);
-	y = 0;
-	while (info->valid_paths[y] != NULL)
+	int		i;
+	int		t;
+
+	i = 0;
+	t = 0;
+	reset_room_statuses(info);
+	info->ants_at_start = info->ants;
+	divide_to_paths(info);
+/*	while (info->valid_indexes[i][0] != EMPTY)
 	{
-		create_route(info, info->valid_paths[y], y);
-		y++;
-	}
-	info->route[y] = NULL;
-	y = 0;
-	int x = 0;
-	while (info->route[y] != NULL)
-	{
-		ft_printf("route nbr: %d\n", info->route[y][0]->path);
-		while (info->route[y][x] != NULL)
+		ft_printf("room[%s] queue: ", info->rooms[info->valid_indexes[i][0]]->name);
+		while (info->rooms[info->valid_indexes[i][0]]->ant_queue[t] != 0)
 		{
-			ft_printf("%s->", info->route[y][x]->name);
-			x++;
+			ft_printf("[%d]", info->rooms[info->valid_indexes[i][0]]->ant_queue[t]);
+			t++;
 		}
-		y++;
-		x = 0;
-	}
+		ft_putchar('\n');
+		i++;
+		t = 0;
+	}*/
+	print_turns(info);
 }

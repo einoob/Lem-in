@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 13:01:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 17:40:39 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/15 15:50:03 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,30 @@ int		check_end(t_info *info)
 		y++;
 	}
 	info->path_saved = 2;
-	return (1);
+	return (0);
+}
+
+int		enough_paths(t_info *info, int path_index)
+{
+	int		cmp_length;
+	int		sum;
+	int		i;
+
+	if (info->path_amount == info->max_paths)
+		return (1);
+	if (info->path_amount == 1)
+		return (0);
+	cmp_length = info->rooms[info->valid_indexes[path_index][0]]->length;
+	sum = 0;
+	i = 0;
+	while (i < path_index)
+	{
+		sum += (cmp_length - info->rooms[info->valid_indexes[i][0]]->length);
+		i++;
+	}
+	if (sum >= info->ants)
+		return (1);
+	return (0);
 }
 
 void	delete_duplicates(t_info *info, int *path)
@@ -68,7 +91,7 @@ void	delete_duplicates(t_info *info, int *path)
 	int		i;
 	int		t;
 	int		u;
-	
+
 	i = 0;
 	t = 0;
 	u = 0;
@@ -97,12 +120,10 @@ void	save_path(t_info *info, int path_i)
 	char	*add;
 	char	*tmp;
 	int		i;
-	int		t;
 	int		u;
-	
+
 	u = info->path_amount;
 	i = 0;
-	t = 0;
 	info->valid_paths[u] = ft_strnew(0);
 	while (info->index_stack[path_i][i] != EMPTY)
 	{
@@ -112,6 +133,15 @@ void	save_path(t_info *info, int path_i)
 		i++;
 	}
 	info->rooms[info->index_stack[path_i][0]]->length = i - 1;
+	info->rooms[info->index_stack[path_i][0]]->cost = i - 1;
+	if (!(info->rooms[info->index_stack[path_i][0]]->ant_queue = (int*)malloc(sizeof(int) * info->ants + 1)))
+		exit_error(ERR_MALLOC);
+	i = 0;
+	while (i < info->ants + 1)
+	{
+		info->rooms[info->index_stack[path_i][0]]->ant_queue[i] = 0;
+		i++;
+	}
 	i = 0;
 	while (info->valid_indexes[info->path_amount][i] != EMPTY)
 	{
@@ -126,9 +156,12 @@ void	save_path(t_info *info, int path_i)
 //	ft_printf("S A V I N G:\n[%s]\n", info->valid_paths[info->path_amount]);
 	info->path_amount++;
 	info->path_saved = 1;
-	if (!(check_end(info)))
+	//	"check if further paths are needed function" --> if no more paths needed change info->path_saved = 2;
+	if (enough_paths(info, info->path_amount - 1))
 	{
-		reset_rooms(info);
-		reset_tmp_stacks(info);
+		info->path_saved = 2;
+		return ;
 	}
+	reset_rooms(info);
+	reset_tmp_stacks(info);
 }

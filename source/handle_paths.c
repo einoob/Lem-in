@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 17:45:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 17:40:01 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 15:11:37 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	create_fork(t_info *info, int room_i, int y)
 		}
 		t++;
 	}
-	if (fork > 0)
+	if (fork > 0) // experiment with this
 	{
 		t = 0;
 		while (info->index_stack[y][0] != EMPTY)

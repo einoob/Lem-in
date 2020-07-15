@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 16:26:57 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/10 13:45:43 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/14 16:38:09 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,19 @@ void			init_info(t_info *info)
 	int i;
 
 	i = 0;
-	while (i < 129)
-	{
-		info->tmp_string[i] = EMPTY;
-		i++;
-	}
+	while (i < 513)
+		info->tmp_string[i++] = EMPTY;
 	info->ants = -1;
-	info->ants_start = 0;
-	info->ants_end = 0;
+	info->ants_at_start = 0;
+	info->ants_at_end = 0;
 	info->path_amount = 0;
-	info->link_amnt = 0;
-	info->path_saved = 0;
+	info->phase = 1;
 	info->level = 1;
-	info->path_stack = 0;
+	info->lines = 1;
+	info->link_amnt = 0;
 	info->max_paths = INT_MAX;
+	info->path_saved = 0;
+	info->path_stack = 0;
 	info->rooms_to_check = (char**)malloc(sizeof(char*) * 1);
 	info->rooms_to_check[0] = NULL;
 }
@@ -65,12 +64,12 @@ void	print_paths(t_info *info)
 	int				i;
 
 	i = 0;
-	ft_printf("ants: %d\n", info->ants);
 	while (info->valid_paths[i] != NULL)
 	{
 		ft_printf("[%s]\n", ft_strtrim(info->valid_paths[i]));
 		i++;
 	}
+	ft_putchar('\n');
 }
 
 static void		lem_in(int ac, char *av)
@@ -99,16 +98,19 @@ static void		lem_in(int ac, char *av)
 	init_info(info);
 	get_next_line(info->tmpfd, &line);
 	output->line = ft_strdup(line);
-	info->ants = ft_atoi(output->line);
-	info->ants_start = info->ants;
+	parse_ants(info, output);
+	// info->ants = ft_atoi(output->line);
+	// info->ants_at_start = info->ants;
 	free(line);
 	if (!parse_v2(output, info, 1))
 		exit_error(ERR_PARSE_V2);
 	get_links(info);
-	ft_printf("><><><><><><\n><><><><><><\nPATHS  SAVED:\n");
+	ft_printf("><><><><><><\n><><><><><><\nants: %d\nPATHS  SAVED:\n", info->ants);
 	print_paths(info);
-	//take_turns(info);
-	free_memory(info, 0);
+	ant_flow(info);
+	ft_printf("lines: %d\n", info->lines);
+//	take_turns(info);
+//	free_memory(info, 0);
 }
 
 /*
