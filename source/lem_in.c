@@ -6,36 +6,11 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 16:26:57 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/14 16:38:09 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/27 20:13:42 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
-
-void			free_memory(t_info *info, int i)
-{
-	free(info->start);
-	free(info->end);
-	while (info->rooms[i] != NULL)
-	{
-		free(info->rooms[i]->name);
-		i++;
-	}
-	free_2d_array(info->paths);
-}
-
-void			free_2d_array(char **arr)
-{
-	int				i;
-
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 void			init_info(t_info *info)
 {
@@ -44,10 +19,14 @@ void			init_info(t_info *info)
 	i = 0;
 	while (i < 513)
 		info->tmp_string[i++] = EMPTY;
-	info->ants = -1;
+	if (!info->flags->ants)
+		info->ants = -1;
 	info->ants_at_start = 0;
 	info->ants_at_end = 0;
-	info->path_amount = 0;
+	info->last_found_used = 1;
+	info->last_found_used_2 = 1;
+	info->path_amount_1 = 0;
+	info->path_amount_2 = 0;
 	info->phase = 1;
 	info->level = 1;
 	info->lines = 1;
@@ -57,37 +36,135 @@ void			init_info(t_info *info)
 	info->path_stack = 0;
 	info->rooms_to_check = (char**)malloc(sizeof(char*) * 1);
 	info->rooms_to_check[0] = NULL;
+	info->round = 0;
 }
 
 void	print_paths(t_info *info)
 {
-	int				i;
+	int		y;
+	int		i;
 
-	i = 0;
-	while (info->valid_paths[i] != NULL)
+	y = 0;
+	while (info->valid_indexes[y][0] != EMPTY)
 	{
-		ft_printf("[%s]\n", ft_strtrim(info->valid_paths[i]));
-		i++;
+		i = 0;
+		ft_putchar('[');
+		while (info->valid_indexes[y][i] != EMPTY)
+		{
+			ft_printf("%s ", info->rooms[info->valid_indexes[y][i]]->name);
+			i++;
+		}
+		ft_putstr("]\n");
+		y++;
+	}
+	ft_putchar('\n');
+	if (info->path_amount_2 > 0)
+	{
+		i = 0;
+		y = 0;
+		ft_printf("OR\n");
+		while (info->valid_indexes_2[y][0] != EMPTY)
+		{
+			ft_putchar('[');
+			while (info->valid_indexes_2[y][i] != EMPTY)
+			{
+				ft_printf("%s ", info->rooms[info->valid_indexes_2[y][i]]->name);
+				i++;
+			}
+			ft_putstr("]\n");
+			i = 0;
+			y++;
+		}
 	}
 	ft_putchar('\n');
 }
 
-static void		lem_in(int ac, char *av)
+void	second_round(t_info *info)
 {
-	t_ant			*ant;
-	t_info			*info;
-	t_link			*link;
+	int		i;
+
+	i = 0;
+	info->phase = 2;
+	info->level = 1;
+	info->path_amount_2 = 0;
+	if (info->path_amount_1 < 1)
+		exit_error(ERR_NO_PATH, info);
+	reset_tmp_stacks(info);
+	while (info->rooms[i] != NULL)
+	{
+		info->rooms[i]->visited = 0;
+		i++;
+	}
+	get_links_for_start(info, 0, 0, 0);
+	find_paths(info, -1, 0, 0);
+	calculate_moves(info);
+}
+
+void	all_ants_to_end_at_once(t_info *info)
+{
+	int		i;
+
+	i = 1;
+	ft_printf("\n");
+	while (i <= info->ants)
+	{
+		ft_printf("L%d-%s ", i, info->end);
+		i++;
+	}
+	ft_printf("\n");
+}
+
+void	save_first_level_rooms(t_info *info)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 513)
+	{
+		info->lvl_1_rooms[i] = info->check_rooms[i];
+	//	if (info->check_rooms[i] > 0)
+	//		ft_printf("lvl_1_room[%d] %s\n", i, info->rooms[info->lvl_1_rooms[i]]->name);
+		info->check_rooms[i] = EMPTY;
+	}
+}
+
+void	third_round(t_info *info)
+{
+	int		i;
+
+	info->round = 1;
+	while (info->round < 5)
+	{
+		i = -1;
+		info->phase = 2;
+		info->level = 1;
+		info->path_amount_2 = 0;
+		info->path_saved = 0;
+		reset_tmp_stacks(info);
+		while (info->rooms[++i] != NULL)
+		{
+			info->rooms[i]->visited = 0;
+			info->rooms[i]->flow = 0;
+			info->rooms[i]->path_2 = -1;
+		}
+		get_links_for_start(info, 0, 0, 0);
+		save_first_level_rooms(info);
+		dfs_search(info, -1);
+	//	sort_paths(info);
+		print_paths(info);
+		calculate_moves(info);
+		info->round++;
+	}
+	info->round++;
+}
+
+static void		lem_in(int ac, char *av, t_info *info)
+{
 	t_output		*output;
 	char			*line;
 
-	if (!(ant = (t_ant*)malloc(sizeof(t_ant))))
-		exit_error(ERR_MALLOC);
-	if (!(info = (t_info*)malloc(sizeof(t_info))))
-		exit_error(ERR_MALLOC);
-	if (!(link = (t_link*)malloc(sizeof(t_link))))
-		exit_error(ERR_MALLOC);
 	if (!(output = (t_output*)malloc(sizeof(t_output))))
-		exit_error(ERR_MALLOC);
+		exit_error(ERR_MALLOC, info);
 	if (ac > 1)
 	{
 		ac += 0;
@@ -99,107 +176,43 @@ static void		lem_in(int ac, char *av)
 	get_next_line(info->tmpfd, &line);
 	output->line = ft_strdup(line);
 	parse_ants(info, output);
-	// info->ants = ft_atoi(output->line);
-	// info->ants_at_start = info->ants;
 	free(line);
-	if (!parse_v2(output, info, 1))
-		exit_error(ERR_PARSE_V2);
-	get_links(info);
-	ft_printf("><><><><><><\n><><><><><><\nants: %d\nPATHS  SAVED:\n", info->ants);
-	print_paths(info);
-	ant_flow(info);
-	ft_printf("lines: %d\n", info->lines);
-//	take_turns(info);
-//	free_memory(info, 0);
-}
-
-/*
-int				main(int ac, char **av)
-{
-
-	t_bool			help;
-	t_bool			verbose;
-	t_ant			*ant;
-	t_info			*info;
-	t_link			*link;
-	t_output		*output;
-	char			*line;
-
-	if (!(ant = (t_ant*)malloc(sizeof(t_ant))))
-		exit_error(ERR_MALLOC);
-	if (!(info = (t_info*)malloc(sizeof(t_info))))
-		exit_error(ERR_MALLOC);
-	if (!(link = (t_link*)malloc(sizeof(t_link))))
-		exit_error(ERR_MALLOC);
-	if (!(output = (t_output*)malloc(sizeof(t_output))))
-		exit_error(ERR_MALLOC);
-
-	help = FALSE;
-	verbose = FALSE;
-
-	// Parse flags
-	while (ac >= 2 && (!ft_strcmp(av[1], "-h") || !ft_strcmp(av[1], "-v")))
+	if (!parse_v2(output, info))
+		exit_error(ERR_PARSE_V2, info);
+	if (info->start_end_link)
+		all_ants_to_end_at_once(info);
+//	first_round(info);
+	else
 	{
-		if (ft_strequ(av[1], "-h"))
-			help = TRUE;
-		else if (ft_strequ(av[1], "-v"))
-			verbose = TRUE;
-		av++;
-		ac--;
-	}
-//	info->tmpfd = open(av[1], O_RDONLY);
-	info->tmpfd = 0;
-	if (ac > 0 && !help)
-	{
-		if (verbose)
-			ft_printf("Verbose mode activated!\n");
-		init_info(info);
-		get_next_line(info->tmpfd, &line);
-		output->line = ft_strdup(line);
-		info->ants = ft_atoi(output->line);
-		free(line);
-		if (!parse_v2(output, info, 1))
-			return (-1);
 		get_links(info);
+		second_round(info);
+		third_round(info);
+		sort_paths(info);
+		ft_printf("><><><><><><\n><><><><><><\nants: %d\nPATHS  SAVED:\n", info->ants);
+		print_paths(info);
+		//write(1, "\n", 1);
+		ant_flow(info);
 	}
-	else if (help)
-		ft_printf("HELP!\n");
-	else
-	 	exit_error(ERR_USAGE);
-	ft_printf("><><><><><><\n><><><><><><\nPATHS  SAVED:\n");
-	print_paths(info);
-	free_memory(info, 0);
-//	while (1);
-	return (0);
+	ft_printf("lines: %d\n", info->lines);
+	free_memory(output);
 }
-*/
 
 int				main(int ac, char **av)
 {
-	t_bool			help;
-	t_bool			verbose;
+	t_info			*info;
 
-	help = FALSE;
-	verbose = FALSE;
-	while (ac >= 2 && (!ft_strcmp(av[1], "-h") || !ft_strcmp(av[1], "-v")))
+	if (!(info = (t_info*)malloc(sizeof(t_info))))
+		exit_error_no_info(ERR_MALLOC);
+	parse_flags(ac, av, info);
+	if (ac > 0 && !info->flags->help)
 	{
-		if (ft_strequ(av[1], "-h"))
-			help = TRUE;
-		else if (ft_strequ(av[1], "-v"))
-			verbose = TRUE;
-		av++;
-		ac--;
-	}
-	if (ac > 0 && !help)
-	{
-		if (verbose)
+		if (info->flags->verbose)
 			ft_printf("Verbose mode activated!\n");
-		lem_in(ac, av[1]);
+		lem_in(ac, av[1], info);
 	}
-	else if (help)
+	else if (info->flags->help)
 		ft_printf("HELP!\n");
 	else
-		exit_error(ERR_USAGE);
-//	while (1);
+		exit_error(ERR_USAGE, info);
 	return (0);
 }
