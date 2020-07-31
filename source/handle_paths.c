@@ -6,35 +6,11 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 17:45:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/27 17:16:22 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/30 17:52:16 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
-
-int		exact_same_path(t_info *info, int path_i)
-{
-	int		y;
-	int		t;
-
-	y = 0;
-	t = 0;
-//	if (info->path_amount_1 == 0)
-//		return (0);
-	while (info->valid_indexes[y][0] != EMPTY)
-	{
-		while (info->valid_indexes[y][t] == info->index_stack[path_i][t])
-		{
-			t++;
-			if (info->valid_indexes[y][t] == EMPTY
-			&& info->index_stack[path_i][t] == EMPTY)
-				return (1);
-		}
-		t = 0;
-		y++;
-	}
-	return (0);
-}
 
 void	create_fork(t_info *info, int room_i, int y, int t)
 {
@@ -54,16 +30,13 @@ void	create_fork(t_info *info, int room_i, int y, int t)
 			fork++;
 		t++;
 	}
-	if (fork > 0)
+	if (fork)
 	{
-		t = 0;
+		t = -1;
 		while (info->index_stack[y][0] != EMPTY)
 			y++;
-		while (info->index_stack[note][t] != EMPTY)
-		{
+		while (info->index_stack[note][++t] != EMPTY)
 			info->index_stack[y][t] = info->index_stack[note][t];
-			t++;
-		}
 	}
 }
 
@@ -85,9 +58,6 @@ void	add_to_path(t_info *info, int last, int next, int y)
 	i = 0;
 	if (info->rooms[last]->flow == 1 && info->rooms[next]->flow == 1)
 		return ;
-//	if (next == info->end_index && info->phase == 2)
-//		ft_printf("%d=2 %d=-1\n", info->phase, info->rooms[last]->path_2);
-		//	ft_printf("%d=2 %d=-1 %d=%d\n", info->phase, info->rooms[last]->path_2, last_room, last);
 	while (info->index_stack[++y][0] != EMPTY)
 	{
 		last_room = last_on_path(info->index_stack[y]);
@@ -95,14 +65,12 @@ void	add_to_path(t_info *info, int last, int next, int y)
 		== last) || (info->phase == 2 && info->rooms[last]->path_2 < 0
 		&& last_room == last))
 		{
-		//	if (info->round > 0)
-		//		ft_printf("%s %d %d %s %d %d\n", info->rooms[last]->name, info->rooms[last]->level, info->rooms[last]->visited, info->rooms[next]->name, info->rooms[next]->level, info->rooms[next]->visited);
 			create_fork(info, last, y, 0);
 			while (info->index_stack[y][i] != EMPTY)
 				i++;
 			info->index_stack[y][i] = next;
 			if (next == info->end_index)
-				save_path(info, y);
+				save_path(info, y, 0);
 			return ;
 		}
 	}

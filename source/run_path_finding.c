@@ -6,51 +6,61 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 17:56:46 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/27 19:14:38 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/30 18:16:34 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void	from_the_middle(t_info *info, int direction)
+static void	to_left(t_info *info, int i)
 {
-	int		i;
 	int		t;
+	int		stop;
 
-	i = 0;
-	t = 0;
-//	direction == 2 ? ft_printf("third round\n") : ft_printf("fourth round\n");
-	while (info->check_rooms[i] != EMPTY)
+	t = -1;
+	stop = 0;
+	while (i >= 0)
 	{
-		info->tmp_string[i] = info->check_rooms[i];
-		info->check_rooms[i] = EMPTY;
-		i++;
-	}
-	i /= 2;
-	while (direction == 2 && info->tmp_string[i] != EMPTY)
-	{
-		info->check_rooms[t] = info->tmp_string[i];
-		info->tmp_string[i] = EMPTY;
-		i++;
-		t++;
-		i = info->tmp_string[i] == EMPTY ? 0 : i;
-	}
-	while (direction == 1 && i >= 0)
-	{
-		info->check_rooms[t] = info->tmp_string[i];
+		info->check_rooms[++t] = info->tmp_string[i];
 		info->tmp_string[i] = EMPTY;
 		i--;
-		t++;
 		if (i == -1)
 		{
+			if (stop)
+				return ;
 			i = 512;
+			stop++;
 			while (info->tmp_string[i] == EMPTY)
 				i--;
 		}
 	}
 }
 
-void	reorder_check_rooms(t_info *info)
+static void	from_the_middle(t_info *info, int direction)
+{
+	int		i;
+	int		t;
+
+	i = -1;
+	t = -1;
+	while (info->check_rooms[++i] != EMPTY)
+	{
+		info->tmp_string[i] = info->check_rooms[i];
+		info->check_rooms[i] = EMPTY;
+	}
+	i = direction == 1 ? i / 2 : i / 2 + 1;
+	while (direction == 2 && info->tmp_string[i] != EMPTY)
+	{
+		info->check_rooms[++t] = info->tmp_string[i];
+		info->tmp_string[i] = EMPTY;
+		i++;
+		i = info->tmp_string[i] == EMPTY ? 0 : i;
+	}
+	if (direction == 1)
+		to_left(info, i);
+}
+
+void		reorder_check_rooms(t_info *info)
 {
 	int		i;
 	int		t;
@@ -59,7 +69,6 @@ void	reorder_check_rooms(t_info *info)
 	t = 0;
 	if (info->round == 2)
 	{
-//		ft_printf("second round\n");
 		while (info->check_rooms[i] != EMPTY)
 		{
 			info->tmp_string[i] = info->check_rooms[i];
@@ -77,13 +86,16 @@ void	reorder_check_rooms(t_info *info)
 		info->tmp_string[i] = EMPTY;
 }
 
-void	find_paths(t_info *info, int i, int j, int s)
+void		find_paths(t_info *info, int i, int j, int s)
 {
 	int		l;
 
 	while (info->check_rooms[++i] != EMPTY && info->path_saved == 0)
 	{
 		s = info->check_rooms[i];
+		if (info->phase == 1 && info->rooms[s]->level > 1
+		&& info->rooms[s]->path < 0)
+			delete_dead_end(info, s);
 		while (info->rooms[s]->links[j] != NULL
 		&& info->path_saved == 0)
 		{
@@ -100,7 +112,7 @@ void	find_paths(t_info *info, int i, int j, int s)
 	start_over_or_continue(info, l);
 }
 
-void	get_links_for_start(t_info *info, int i, int s, int t)
+void		get_links_for_start(t_info *info, int i, int s, int t)
 {
 	while (s < 513)
 	{
@@ -121,18 +133,7 @@ void	get_links_for_start(t_info *info, int i, int s, int t)
 		i++;
 	}
 	if (info->round > 1)
-	{
-	//	ft_printf("reordering\n");
 		reorder_check_rooms(info);
-	}
 	info->rooms[info->start_index]->visited = 2;
 	info->level++;
-	i = 0;
-//	ft_printf("check rooms: ");
-	while (info->check_rooms[i] != EMPTY)
-	{
-	//	ft_printf("[%s]", info->rooms[info->check_rooms[i]]->name);
-		i++;
-	}
-//	ft_putchar('\n');
 }

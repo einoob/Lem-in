@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dfs_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlindhol <mlindhol@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 12:46:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/27 17:42:56 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/30 15:30:05 by mlindhol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@ void	dfs_start_over_or_continue(t_info *info, int index)
 		info->level++;
 		search_from_room(info);
 	}
-	else
-	{
-		return ;
-	}
-	
 }
 
 void	search_from_room(t_info *info)
@@ -40,13 +35,9 @@ void	search_from_room(t_info *info)
 	while (info->check_rooms[++c] != EMPTY && info->path_saved == 0)
 	{
 		s = info->check_rooms[c];
-	//	ft_printf("\nin room %s[%d], setting visited: ", info->rooms[s]->name, info->rooms[s]->level);
 		while (info->rooms[s]->links[++j] != NULL && info->path_saved == 0)
 		{
 			l = find_a_room(info, info->rooms[s]->links[j]);
-	//		ft_printf("%s %s %d %d\n", info->rooms[s]->name, info->rooms[l]->name, info->level, info->rooms[l]->visited);
-	//		if (info->rooms[l]->visited == 0)
-	//			ft_printf("%s ", info->rooms[l]->name);
 			if (info->rooms[l]->visited == 0)
 				set_visited(info, s, l);
 			if (l == info->end_index)
@@ -69,7 +60,8 @@ void	get_lvl_2_rooms(t_info *info, int i)
 	while (info->rooms[info->lvl_1_rooms[i]]->links[j] != NULL)
 	{
 		s = find_a_room(info, info->rooms[info->lvl_1_rooms[i]]->links[j]);
-		if (info->rooms[s]->visited == 0)
+		if (info->rooms[info->lvl_1_rooms[i]]->path_2 < 0
+		&& info->rooms[s]->visited == 0)
 		{
 			info->rooms[s]->visited = 1;
 			info->rooms[s]->level = info->level;
@@ -90,9 +82,10 @@ void	dfs_search(t_info *info, int i)
 	{
 		info->level = 2;
 		get_lvl_2_rooms(info, i);
-	//	ft_printf("from %s\n", info->rooms[info->lvl_1_rooms[i]]->name);
 		search_from_room(info);
 		reset_tmp_stacks(info);
+		if (info->last_found_used_2 == 0)
+			return ;
 		info->path_saved = 0;
 	}
 }

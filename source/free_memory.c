@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlindhol <mlindhol@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/23 09:21:32 by mlindhol          #+#    #+#             */
-/*   Updated: 2020/07/27 12:17:41 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/31 12:15:12 by mlindhol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@ void			lst_free(t_output *op)
 	}
 	free(current->line);
 	free(current);
-}
-
-/*
-**	Free memory dispatcher.
-*/
-
-void			free_memory(t_output *op)
-{
-	lst_free(op);
 }
 
 /*

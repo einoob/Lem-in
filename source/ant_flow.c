@@ -6,7 +6,7 @@
 /*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:30:44 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/27 19:03:21 by elindber         ###   ########.fr       */
+/*   Updated: 2020/07/30 18:17:30 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		ant_to_first_room(t_info *info, int i)
 	if (info->rooms[info->valid_indexes[i][0]]->ant_queue[t] <= 0)
 		return ;
 	ant = ft_itoa(info->rooms[info->valid_indexes[i][0]]->ant_queue[t]);
-	ft_printf("L%s-%s ", ant, info->rooms[info->valid_indexes[i][0]]->name);
+	print_ant(ant, info, i, info->rooms[info->valid_indexes[i][0]]->name);
 	free(ant);
 	info->rooms[info->valid_indexes[i][0]]->visited = 1;
 	info->rooms[info->valid_indexes[i][0]]->ant_id =
@@ -52,7 +52,7 @@ static void		move_path(t_info *info, int i)
 		&& info->rooms[info->valid_indexes[i][t + 1]]->visited == 0)
 		{
 			ant = ft_itoa(info->rooms[info->valid_indexes[i][t]]->ant_id);
-			ft_printf("L%s-%s ", ant,
+			print_ant(ant, info, i,
 			info->rooms[info->valid_indexes[i][t + 1]]->name);
 			free(ant);
 			info->rooms[info->valid_indexes[i][t + 1]]->ant_id =
@@ -88,169 +88,12 @@ static void		print_turns(t_info *info)
 				ft_putchar('\n');
 			return ;
 		}
-		if (i == info->path_amount_1)
+		if (i == info->path_n_1)
 		{
 			i = 0;
 			info->lines++;
 			ft_putchar('\n');
 		}
-	}
-}
-
-/*
-**	Helper for D_T_P1. Increment and decrement variables in struct.
-*/
-
-static int		divide_paths_1_data(t_info *info, int antnb, int i, int tab)
-{
-	tab = info->rooms[info->valid_indexes[i][0]]->ants;
-	info->rooms[info->valid_indexes[i][0]]->ant_queue[tab] = antnb;
-	info->rooms[info->valid_indexes[i][0]]->ants++;
-	info->rooms[info->valid_indexes[i][0]]->cost++;
-	info->ants_at_start--;
-	return (tab);
-}
-
-/*
-**	Helper for D_T_P2. Increment and decrement variables in struct.
-*/
-
-static int		divide_paths_2_data(t_info *info, int antnb, int i, int tab)
-{
-	tab = info->rooms[info->valid_indexes_2[i][0]]->ants_2;
-	info->rooms[info->valid_indexes_2[i][0]]->ant_queue_2[tab] = antnb;
-	info->rooms[info->valid_indexes_2[i][0]]->ants_2++;
-	info->rooms[info->valid_indexes_2[i][0]]->cost_2++;
-	info->ants_at_start--;
-	return (tab);
-}
-
-/*
-**	Helper for D_T_P1.
-*/
-
-// static int		cmp_loop_1(t_info *info, int cmp, int i)
-// {
-// 	cmp = info->rooms[info->valid_indexes[i][0]]->cost;
-// 	i = 0;
-// 	while (info->rooms[info->valid_indexes[i][0]]->cost > cmp)
-// 		i++;
-// 	return (i);
-// }
-
-/*
-**	Helper for D_T_P2.
-*/
-
-// static int		cmp_loop_2(t_info *info, int cmp, int i)
-// {
-// 	cmp = info->rooms[info->valid_indexes_2[i][0]]->cost_2;
-// 	i = 0;
-// 	while (info->rooms[info->valid_indexes_2[i][0]]->cost_2 > cmp)
-// 		i++;
-// 	return (i);
-// }
-
-/*
-**	Divides ants to paths during first ant flow.
-*/
-
-static void		divide_to_paths_1(t_info *info, int i, int tab, int cmp)
-{
-	int		antnb;
-
-	antnb = 1;
-	while (info->ants_at_start > 0)
-	{
-		if (info->path_amount_1 == 1)
-			tab = divide_paths_1_data(info, antnb++, i, tab);
-		else if (info->rooms[info->valid_indexes[i][0]]->cost
-		<= info->rooms[info->valid_indexes[i + 1][0]]->cost)
-		{
-			if (info->rooms[info->valid_indexes[i][0]]->cost
-			== info->rooms[info->valid_indexes[i + 1][0]]->cost)
-			{
-				cmp = info->rooms[info->valid_indexes[i][0]]->cost;
-				i = 0;
-				while (info->rooms[info->valid_indexes[i][0]]->cost > cmp)
-					i++;
-				// i = cmp_loop_1(info, cmp, i);
-			}
-			tab = divide_paths_1_data(info, antnb++, i, tab);
-		}
-		else if (info->rooms[info->valid_indexes[i][0]]->cost
-		> info->rooms[info->valid_indexes[i + 1][0]]->cost)
-			tab = divide_paths_1_data(info, antnb++, ++i, tab);
-		if (i == info->path_amount_1 - 1
-		|| info->rooms[info->valid_indexes[i][0]]->cost
-		< info->rooms[info->valid_indexes[i + 1][0]]->cost)
-			i = 0;
-	}
-}
-
-/*
-**	Divides ants to paths during first ant flow.
-*/
-
-void		divide_to_paths_2(t_info *info, int i, int tab, int cmp)
-{
-	int		antnb;
-
-	antnb = 1;
-	while (info->ants_at_start > 0)
-	{
-		if (info->path_amount_2 == 1)
-			tab = divide_paths_2_data(info, antnb++, i, tab);
-		else if (info->rooms[info->valid_indexes_2[i][0]]->cost_2
-		<= info->rooms[info->valid_indexes_2[i + 1][0]]->cost_2)
-		{
-			if (info->rooms[info->valid_indexes_2[i][0]]->cost_2
-			== info->rooms[info->valid_indexes_2[i + 1][0]]->cost_2)
-			{
-				cmp = info->rooms[info->valid_indexes_2[i][0]]->cost_2;
-				i = 0;
-				while (info->rooms[info->valid_indexes_2[i][0]]->cost_2 > cmp)
-					i++;
-				// i = cmp_loop_2(info, cmp, i);
-			}
-			tab = divide_paths_2_data(info, antnb++, i, tab);
-		}
-		else if (info->rooms[info->valid_indexes_2[i][0]]->cost_2
-		> info->rooms[info->valid_indexes_2[i + 1][0]]->cost_2)
-			tab = divide_paths_2_data(info, antnb++, ++i, tab);
-		if (i == info->path_amount_2 - 1
-		|| info->rooms[info->valid_indexes_2[i][0]]->cost_2
-		< info->rooms[info->valid_indexes_2[i + 1][0]]->cost_2)
-			i = 0;
-	}
-}
-
-/*
-**	Resets rooms.
-*/
-
-static void		reset_room_statuses(t_info *info, int y, int i)
-{
-	while (info->valid_indexes[y][0] != EMPTY)
-	{
-		while (info->valid_indexes[y][i] != EMPTY)
-		{
-			info->rooms[info->valid_indexes[y][i]]->visited = 0;
-			i++;
-		}
-		i = 0;
-		y++;
-	}
-	y = 0;
-	while (info->valid_indexes_2[y][0] != EMPTY)
-	{
-		while (info->valid_indexes_2[y][i] != EMPTY)
-		{
-			info->rooms[info->valid_indexes_2[y][i]]->visited = 0;
-			i++;
-		}
-		i = 0;
-		y++;
 	}
 }
 
@@ -261,20 +104,18 @@ static void		reset_room_statuses(t_info *info, int y, int i)
 void			ant_flow(t_info *info)
 {
 	int		i;
-	int		t;
+	int		y;
 
-	i = 0;
-	t = 0;
-	reset_room_statuses(info, 0, 0);
+	i = -1;
+	y = -1;
+	while (info->valid_indexes[++y][0] != EMPTY)
+	{
+		while (info->valid_indexes[y][++i] != EMPTY)
+			info->rooms[info->valid_indexes[y][i]]->visited = 0;
+		i = -1;
+	}
 	info->ants_at_start = info->ants;
-	divide_to_paths_1(info, 0, 0, 0);
+	divide_to_paths(info, 0, 0, 0);
 	info->ants_at_start = info->ants;
-//	if (info->valid_indexes_2[0][0] != EMPTY)
-///		divide_to_paths_2(info, 0, 0, 0);
-	info->ants_at_start = info->ants;
-//	if (info->path_amount_2 > 0 && info->rooms[info->valid_indexes[0][0]]->cost
-//	> info->rooms[info->valid_indexes_2[0][0]]->cost_2)
-//		print_turns_2(info);
-//	else
-		print_turns(info);
+	print_turns(info);
 }
