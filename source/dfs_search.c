@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dfs_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindhol <mlindhol@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 12:46:15 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/30 15:30:05 by mlindhol         ###   ########.fr       */
+/*   Updated: 2020/08/10 13:35:01 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	get_lvl_2_rooms(t_info *info, int i)
 	{
 		s = find_a_room(info, info->rooms[info->lvl_1_rooms[i]]->links[j]);
 		if (info->rooms[info->lvl_1_rooms[i]]->path_2 < 0
-		&& info->rooms[s]->visited == 0)
+		&& info->rooms[s]->visited == 0 && s != info->start_index)
 		{
 			info->rooms[s]->visited = 1;
 			info->rooms[s]->level = info->level;
