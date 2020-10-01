@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_second_and_third_round.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elindber <elindber@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 17:43:12 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/31 14:22:36 by elindber         ###   ########.fr       */
+/*   Updated: 2020/10/01 15:44:03 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

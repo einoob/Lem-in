@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   divide_ants_to_paths.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elindber <elindber@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:17:12 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/30 18:17:57 by elindber         ###   ########.fr       */
+/*   Updated: 2020/10/01 15:42:47 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

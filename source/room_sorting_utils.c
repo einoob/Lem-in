@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_sorting_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elindber <elindber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elindber <elindber@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:21:30 by elindber          #+#    #+#             */
-/*   Updated: 2020/07/30 18:23:30 by elindber         ###   ########.fr       */
+/*   Updated: 2020/10/01 15:43:55 by elindber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
