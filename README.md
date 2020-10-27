@@ -51,7 +51,7 @@ During consecutive searches we limit the rooms BFS can visit so new paths are fo
 ## How to use
 Clone repo:
 ```
-git clone https://github.com/MikeyLHolm/Hive-lem-in.git
+git clone https://github.com/einoob/Lem-in.git
 ```
 Create executable in Hive-lem-in directory:
 ```
