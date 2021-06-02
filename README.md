@@ -1,5 +1,5 @@
 # Hive-lem-in
-Elementary max flow algorithmic project. Guiding ants thru ant farm. Collaboration prjoject with and this readme written by [Mikko Lindholm](https://github.com/MikeyLHolm).
+Elementary max flow algorithmic project. Guiding ants thru ant farm. Collaboration project with and this readme written by [Mikko Lindholm](https://github.com/MikeyLHolm).
 
 ## Objectives
 The goal of this project is to find the quickest way to get n ants across the farm. Quickest way means the solution with the least number of lines, respecting the output format requested below. Ants will also need to avoid traffic jams as well as walking all over their fellow ants.
